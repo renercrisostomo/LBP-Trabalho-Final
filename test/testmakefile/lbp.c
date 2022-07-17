@@ -10,12 +10,6 @@ void salvarHistogramaLBP(struct pgm *pPGM){
 
 	unsigned char histogram[258] = {0};
 
-	FILE *fp;
-	if (!(fp = fopen("histogramas.csv","a"))){
-		perror("Erro. Não foi possível abrir o arquivo histograma.csv");
-		exit(1);
-	}
-
   	for (int k=0; k < (pPGM->linhas * pPGM->colunas); k++){
 
 		unsigned char decimal = 0;
@@ -23,7 +17,7 @@ void salvarHistogramaLBP(struct pgm *pPGM){
 		bool esquerda = (k % pPGM->colunas == 0);
 
 		if (*(pPGM->pDados+k)){
-			if (k >= pPGM->colunas){
+			if (!(k < pPGM->colunas)){
 				if ((!esquerda) && (*(pPGM->pDados+k-pPGM->colunas-1) >= *(pPGM->pDados+k))) decimal += pow(2, 0);
 				if (*(pPGM->pDados+k-pPGM->colunas) >= *(pPGM->pDados+k)) decimal += pow(2, 1);
 				if ((!direita) && (*(pPGM->pDados+k-pPGM->colunas+1) >= *(pPGM->pDados+k))) decimal += pow(2, 2);
@@ -31,7 +25,7 @@ void salvarHistogramaLBP(struct pgm *pPGM){
 
 			if ((!direita) && (*(pPGM->pDados+k+1) >= *(pPGM->pDados+k))) decimal += pow(2, 3);
 
-			if (k < pPGM->linhas*pPGM->colunas-pPGM->colunas){
+			if (!(k >= pPGM->linhas*pPGM->colunas-pPGM->colunas)){
 				if ((!direita) && (*(pPGM->pDados+k+pPGM->colunas+1) >= *(pPGM->pDados+k))) decimal += pow(2, 4);
 				if (*(pPGM->pDados+k+pPGM->colunas) >= *(pPGM->pDados+k)) decimal += pow(2, 5);
 				if ((!esquerda) && (*(pPGM->pDados+k+pPGM->colunas-1) >= *(pPGM->pDados+k))) decimal += pow(2, 6);
@@ -43,6 +37,11 @@ void salvarHistogramaLBP(struct pgm *pPGM){
 		histogram[decimal] += 1;
 	}
 
+	FILE *fp;
+	if (!(fp = fopen("histogramas.csv","a"))){
+		perror("Erro. Não foi possível abrir o arquivo histograma.csv");
+		exit(1);
+	}
 	histogram[257] = pPGM->primeiro_digito-48;
 	for (int i=0; i < 256; i++){
 		fprintf(fp, "%hhu, ", histogram[i]);
