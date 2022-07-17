@@ -26,7 +26,7 @@ void lerImagemPGM(struct pgm *pio, char *filename){
 		while( !(ch=getc(fp) =='\n'));
 	}
 
-	fseek(fp, -1, SEEK_CUR); // substituí o -1 por -2 para resolver o problema dos comentários
+	fseek(fp, -2, SEEK_CUR); // substituí o -1 por -2 para resolver o problema dos comentários
 
 	fscanf(fp, "%d %d", &pio->colunas, &pio->linhas);
 	if (ferror(fp)){ 
