@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
 	if(argc < 2){
-		puts("Erro. Uso: ./main.exe <caminho do diretorio de imagens>");
+		puts("Erro. Uso: ./main.exe <caminho do diretorio contendo as imagens pgm>");
 		exit(0);
 	}
 	
@@ -42,16 +42,16 @@ int main(int argc, char *argv[]){
 		salvarHistogramaLBP(&img);
 		fim = clock();
 		free(img.pDados);
-		printf("%03d/656\n", ++count);
+		printf("%03d imagens pgm\n", ++count);
 
 		tempo_por_imagem = (double)(fim - inicio) / CLOCKS_PER_SEC;
 		tempo_total += tempo_por_imagem;
     }
 
     closedir(dir);
-
-	printf("\nTempo Medio: %lf\n",tempo_total/count);
-	printf("Tempo Total: %lf\n\n",tempo_total);
+	
+	printf("\nTempo Medio: %lf s\n",tempo_total/count);
+	printf("Tempo Total: %lf s\n\n",tempo_total);
 	
 	return 0;
 }
