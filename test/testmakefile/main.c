@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 
 	if(argc < 2){
-		puts("Erro. Uso: ./main.exe <caminho do diretorio>");
+		puts("Erro. Uso: ./main.exe <caminho do diretorio de imagens>");
 		exit(0);
 	}
 	
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
 	FILE *fp;
 
 	if (!(fp = fopen("histogramas.csv","w"))){
-		perror("Erro. ");
+		perror("Erro. ao abrir o arquivo histogramas.csv");
 		exit(1);
 	}
 	fclose(fp);
@@ -47,8 +47,8 @@ int main(int argc, char *argv[]){
 
     closedir(dir);
 
-	printf("\nTempo Médio: %lf\n",tempo_total/count);
-	printf("Tempo Total: %lf\n",tempo_total);
+	printf("\nTempo Medio: %lf\n",tempo_total/count);
+	printf("Tempo Total: %lf\n\n",tempo_total);
 	
 	return 0;
 }
